@@ -1,0 +1,122 @@
+/**
+*
+*	@author Takahiro HARADA
+*
+*/
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
+
+#include <vector_types.h>
+#include <vector_functions.h>
+
+#include "Matrix3x3.h"
+#include "quaternion.h"
+
+
+class
+__builtin_align__(16)
+Transform
+{
+	public:
+		inline
+		Transform();
+		inline
+		__device__ __host__
+		Transform(const float4& translation, const Quaternion& rotation);
+		inline
+		__device__ __host__
+		void set(const float4& translation, const Quaternion& rotation);
+		inline
+		__device__ __host__
+		void transformVec(const float4& vecIn, float4& vecOut) const;
+		inline
+		__device__ __host__
+		void invTransformVec(const float4& vecIn, float4& vecOut) const;
+		inline
+		__device__ __host__
+		void rotateVec(const float4& vecIn, float4& vecOut) const;
+		inline
+		__device__ __host__
+		void transformEqn(const float4& eqnIn, float4& eqnOut) const;
+		inline
+		__device__ __host__
+		Transform operator *(const Transform& t);
+		inline
+		__device__ __host__
+		Transform& operator =(const Transform& t);
+		inline
+		__device__ __host__
+		void invert();
+
+	public:
+		float4 m_translation;
+		Matrix3x3 m_rotation;
+};
+
+//	inl
+Transform::Transform()
+{
+
+}
+__device__ __host__
+Transform::Transform(const float4 &translation, const Quaternion &rotation)
+{
+	m_translation = translation;
+	rotation.getRotationMatrix( m_rotation );
+}
+__device__ __host__
+void Transform::set(const float4 &translation, const Quaternion &rotation)
+{
+	m_translation = translation;
+	rotation.getRotationMatrix( m_rotation );
+}
+__device__ __host__
+void Transform::transformVec(const float4 &vecIn, float4 &vecOut) const
+{
+	vecOut = m_rotation * vecIn + m_translation;
+}
+__device__ __host__
+void Transform::invTransformVec(const float4 &vecIn, float4 &vecOut) const
+{
+	Matrix3x3 transposed = m_rotation;
+	transposed.transpose();
+	vecOut = transposed * (vecIn - m_translation);
+}
+__device__ __host__
+void Transform::rotateVec(const float4& vecIn, float4& vecOut) const
+{
+	vecOut = m_rotation * vecIn;
+}
+__device__ __host__
+void Transform::transformEqn(const float4& eqnIn, float4& eqnOut) const
+{
+	rotateVec( eqnIn, eqnOut );
+	eqnOut.w = eqnIn.w - dot3( eqnOut, m_translation );
+}
+__device__ __host__
+Transform Transform::operator *(const Transform& t)
+{
+//	m_rotation = t.m_rotation * m_rotation;
+//	m_translation = t.m_rotation * m_translation + t.m_translation;
+	Transform ans;
+	ans.m_rotation = m_rotation * t.m_rotation;
+	ans.m_translation = m_rotation * t.m_translation + m_translation;
+	return ans;
+}
+inline
+__device__ __host__
+Transform& Transform::operator =(const Transform& t)
+{
+	m_translation = t.m_translation;
+	m_rotation = t.m_rotation;
+	return *this;
+}
+inline
+__device__ __host__
+void Transform::invert()
+{
+	m_rotation.transpose();
+	m_translation = m_rotation * (-m_translation);
+}
+
+#endif

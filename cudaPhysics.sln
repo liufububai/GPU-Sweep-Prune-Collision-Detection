@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cudaPhysics", "cudaPhysics\cudaPhysics.vcproj", "{F8F93F12-5EF9-425D-992A-7979792CC7F5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE} = {16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{2FE2A97B-483C-4321-8B0F-1A0000256590}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParticleRigidBody", "ParticleRigidBody\ParticleRigidBody.vcproj", "{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8F93F12-5EF9-425D-992A-7979792CC7F5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F8F93F12-5EF9-425D-992A-7979792CC7F5}.Debug|Win32.Build.0 = Debug|Win32
+		{F8F93F12-5EF9-425D-992A-7979792CC7F5}.Release|Win32.ActiveCfg = Release|Win32
+		{F8F93F12-5EF9-425D-992A-7979792CC7F5}.Release|Win32.Build.0 = Release|Win32
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}.Debug|Win32.Build.0 = Debug|Win32
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}.Release|Win32.ActiveCfg = Release|Win32
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{16AB1291-A20E-45B1-BFCD-1FF5CB5476EE} = {2FE2A97B-483C-4321-8B0F-1A0000256590}
+	EndGlobalSection
+EndGlobal
